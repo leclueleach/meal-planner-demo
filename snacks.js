@@ -6,6 +6,7 @@ const Snacks = (() => {
 
   const MANUAL_KEY  = 'mealplanner_snacks_manual_v1';
   const CHECKED_KEY = 'mealplanner_snacks_checked_v1';
+  const QTY_KEY     = 'mealplanner_snacks_qty_v1';
 
   const CAT_ICONS = {
     'Hot Drinks':          '☕',
@@ -20,12 +21,14 @@ const Snacks = (() => {
   let sheetItems  = [];
   let manualItems = [];
   let checked     = {};
+  let quantities  = {};
   let container   = null;
 
   function save() {
     try {
       localStorage.setItem(MANUAL_KEY,  JSON.stringify(manualItems));
       localStorage.setItem(CHECKED_KEY, JSON.stringify(checked));
+      localStorage.setItem(QTY_KEY,     JSON.stringify(quantities));
     } catch(e) {}
   }
 
@@ -33,9 +36,11 @@ const Snacks = (() => {
     try {
       const m = localStorage.getItem(MANUAL_KEY);
       const c = localStorage.getItem(CHECKED_KEY);
+      const q = localStorage.getItem(QTY_KEY);
       if (m) manualItems = JSON.parse(m);
       if (c) checked     = JSON.parse(c);
-    } catch(e) { manualItems = []; checked = {}; }
+      if (q) quantities  = JSON.parse(q);
+    } catch(e) { manualItems = []; checked = {}; quantities = {}; }
   }
 
   function init(items) { sheetItems = items; load(); }
@@ -69,6 +74,17 @@ const Snacks = (() => {
   }
 
   function uncheckAll() { checked = {}; save(); render(); }
+
+  function changeQty(id, delta) {
+    const current = quantities[id] || 0;
+    const next = Math.max(0, current + delta);
+    quantities[id] = next;
+    save();
+    const qtyEl = document.getElementById('sqty-' + id);
+    const cardEl = document.querySelector('[data-sid="' + id + '"]');
+    if (qtyEl) qtyEl.textContent = next;
+    if (cardEl) cardEl.classList.toggle('qty-active', next > 0);
+  }
 
   function updateCatCount(id) {
     const all  = [...sheetItems, ...manualItems];
@@ -149,5 +165,5 @@ const Snacks = (() => {
     input.focus();
   }
 
-  return { init, mount, render, toggleItem, addManualItem, removeManualItem, clearManualItems, uncheckAll, submitQuickAdd };
+  return { init, mount, render, toggleItem, changeQty, addManualItem, removeManualItem, clearManualItems, uncheckAll, submitQuickAdd };
 })();
