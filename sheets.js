@@ -7,10 +7,10 @@ const Sheets = (() => {
   const BASE_URL = 'https://sheets.googleapis.com/v4/spreadsheets';
 
   async function fetchRange(tabName, range) {
-    const token = Auth.getToken();
-    if (!token) throw new Error('Not authenticated');
     const url = `${BASE_URL}/${CONFIG.SHEET_ID}/values/${encodeURIComponent(tabName + '!' + range)}?key=${CONFIG.API_KEY}`;
-    const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+    const headers = CONFIG.DEMO_MODE ? {} : { Authorization: `Bearer ${Auth.getToken()}` };
+    if (!CONFIG.DEMO_MODE && !Auth.getToken()) throw new Error('Not authenticated');
+    const res = await fetch(url, { headers });
     if (!res.ok) {
       const err = await res.json();
       throw new Error(err.error?.message || 'Sheets API error');
