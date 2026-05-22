@@ -31,8 +31,8 @@ const App = (() => {
   function init() {
     Auth.init(onSignedIn, onSignedOut);
     document.getElementById('btn-signin').addEventListener('click', Auth.signIn);
-    document.getElementById('btn-signout').addEventListener('click', () => { Auth.signOut(); onSignedOut(); });
-    document.getElementById('btn-signout-r').addEventListener('click', () => { Auth.signOut(); onSignedOut(); });
+    const so1 = document.getElementById('btn-signout'); if (so1) so1.addEventListener('click', () => { Auth.signOut(); onSignedOut(); });
+    const so2 = document.getElementById('btn-signout-r'); if (so2) so2.addEventListener('click', () => { Auth.signOut(); onSignedOut(); });
     document.getElementById('btn-refresh').addEventListener('click', loadData);
     document.getElementById('btn-refresh-r').addEventListener('click', loadData);
     document.getElementById('btn-uncheck').addEventListener('click', clearChecked);
