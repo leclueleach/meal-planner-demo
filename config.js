@@ -19,6 +19,7 @@ const CONFIG = {
     HOUSEHOLD:      'Household',
     SNACKS:         'Snacks',
     PLANNER_SNACKS: 'Planner Snacks',
+    COOKING_SNACKS: 'Cooking Snacks',
   },
 
   SCOPES: '',
