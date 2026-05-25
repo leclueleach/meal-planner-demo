@@ -473,16 +473,16 @@ const App = (() => {
   const SERVINGS_KEY = 'mealplanner_servings_v1';
 
   function saveChecked() {
-    try { localStorage.setItem(CHECKED_KEY, JSON.stringify(state.checked)); } catch(e) {}
+    try { sessionStorage.setItem(CHECKED_KEY, JSON.stringify(state.checked)); } catch(e) {}
   }
   function loadChecked() {
-    try { const s = localStorage.getItem(CHECKED_KEY); if (s) state.checked = JSON.parse(s); } catch(e) { state.checked = {}; }
+    try { const s = sessionStorage.getItem(CHECKED_KEY); if (s) state.checked = JSON.parse(s); } catch(e) { state.checked = {}; }
   }
   function saveMealSelections() {
-    try { localStorage.setItem(SERVINGS_KEY, JSON.stringify(state.mealServings)); } catch(e) {}
+    try { sessionStorage.setItem(SERVINGS_KEY, JSON.stringify(state.mealServings)); } catch(e) {}
   }
   function loadMealSelections() {
-    try { const s = localStorage.getItem(SERVINGS_KEY); if (s) Object.assign(state.mealServings, JSON.parse(s)); } catch(e) {}
+    try { const s = sessionStorage.getItem(SERVINGS_KEY); if (s) Object.assign(state.mealServings, JSON.parse(s)); } catch(e) {}
   }
 
   // ── Helpers ───────────────────────────────────────────────
