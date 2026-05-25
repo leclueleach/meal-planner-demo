@@ -28,17 +28,17 @@ const Household = (() => {
   // ── Storage ───────────────────────────────────────────────
   function save() {
     try {
-      localStorage.setItem(MANUAL_KEY,  JSON.stringify(manualItems));
-      localStorage.setItem(CHECKED_KEY, JSON.stringify(checked));
-      localStorage.setItem(QTY_KEY,     JSON.stringify(quantities));
+      sessionStorage.setItem(MANUAL_KEY,  JSON.stringify(manualItems));
+      sessionStorage.setItem(CHECKED_KEY, JSON.stringify(checked));
+      sessionStorage.setItem(QTY_KEY,     JSON.stringify(quantities));
     } catch(e) {}
   }
 
   function load() {
     try {
-      const m = localStorage.getItem(MANUAL_KEY);
-      const c = localStorage.getItem(CHECKED_KEY);
-      const q = localStorage.getItem(QTY_KEY);
+      const m = sessionStorage.getItem(MANUAL_KEY);
+      const c = sessionStorage.getItem(CHECKED_KEY);
+      const q = sessionStorage.getItem(QTY_KEY);
       if (m) manualItems = JSON.parse(m);
       if (c) checked     = JSON.parse(c);
       if (q) quantities  = JSON.parse(q);
